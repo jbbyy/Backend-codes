@@ -1,0 +1,28 @@
+#DOCKER COMPOSE IN A NEW FILE -> database
+version: '3.5'
+services:
+#service for api
+    customerservice: #can be any name, service name
+      image: myapp 
+      #insert after building at terminal with docker build . -t customerapi
+      ports:
+        - "5000:80"
+      environment:
+        SQL_DB: "Server=sqldb;Initial Catalog=CustomerDB;User Id=sa;password=pass@123" 
+      #use sql server running inside docker, not our local host. Same as container name
+
+
+      #service for sql database
+    sqldb:
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      ports:
+        - "1433:1433"
+      environment:
+        - SA_PASSWORD=pass@123 #anything we want
+        - ACCEPT_EULA=Y #end user license agreement
+
+      # create a customerservice and also a table named CustomerDB. 
+      # sqldb is the name of this container. 
+
+
+      

@@ -1,0 +1,57 @@
+//{
+//  //get template from routes ocelot docum
+//  "Routes": [
+//    {
+//      "DownstreamPathTemplate": "/api/Customer",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7050
+//          //give the actual path of API that it is running on 
+//          //have to follow the API port number that we are connecting to 
+//          //access API and redirect is done by downstream 
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/v1/customer",
+//      //upstream path will be used at the frontend side when linking, we define this path that client will use
+//      "UpstreamHttpMethod": [ "GET", "POST" ]
+//      //template that is being exposed to the client
+//    },
+
+//    //able to add another route in by adding it as an object in the array
+//    //adding parameterised route at the bottom
+//    {
+//      "DownstreamPathTemplate": "/api/Customer/{id}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 7050
+
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/myapi/customerdata/{id}",
+//      //this path is passed to the webpage to access
+//      //will redirect from upstream path to downstream path
+//      "UpstreamHttpMethod": [ "GET" ]
+
+//    }
+//  ]
+//  }
+
+{
+  "Routes": [
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer/{id}",
+      "DownstreamScheme": "https",
+      "ServiceName": "CustomerAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/v1/customer/{id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ]
+}
